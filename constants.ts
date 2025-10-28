@@ -44,7 +44,7 @@ export const APP_CONFIG: Record<AppKey, AppConfig> = {
         color: 'from-purple-500 to-violet-400',
         fields: [
             { name: 'title', label: 'Title', type: 'text', required: true },
-            { name: 'content', label: 'Content', type: 'textarea', required: true, rows: 10 },
+            { name: 'content', label: 'Content', type: 'richtext', required: true, rows: 10 },
         ]
     },
     media: {

@@ -52,7 +52,7 @@ const App: React.FC = () => {
     }
 
     return (
-        <div className="w-screen h-screen overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://picsum.photos/1080/1920?blur=10')" }}>
+        <div className="fixed inset-0 overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://picsum.photos/1080/1920?blur=10')" }}>
             <div className="absolute inset-0 bg-black/50 backdrop-blur-md"></div>
             <main className="relative z-10 h-full flex flex-col font-sans text-white p-4 max-w-lg mx-auto landscape:max-w-5xl">
                  <HashRouter>

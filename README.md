@@ -6,9 +6,11 @@
 
 This contains everything you need to run your app locally.
 
-Demo check
->>https://lockbox-neon.vercel.app/#/
+View your app in AI Studio: https://ai.studio/apps/drive/1ysACA5nN6U52TCC533ODQVq1F5jx9_My
 
+## Run Locally
+
+**Prerequisites:**  Node.js
 
 
 1. Install dependencies:

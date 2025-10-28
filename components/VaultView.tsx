@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Plus, Edit, Trash2, X, Eye, EyeOff, PlayCircle, Sparkles, ChevronLeft, ChevronRight, LayoutGrid, Square } from 'lucide-react';
-import { VaultItem, BaseItem, MediaItem, IdentityItem, CardItem, DocumentImage } from '../types';
+import { ArrowLeft, Plus, Edit, Trash2, X, Eye, EyeOff, PlayCircle, Sparkles, ChevronLeft, ChevronRight, LayoutGrid, Square, Bold, Italic, Underline, Strikethrough, List, ListOrdered } from 'lucide-react';
+import { VaultItem, BaseItem, MediaItem, IdentityItem, CardItem, DocumentImage, NoteItem } from '../types';
 import { APP_CONFIG, AppKey } from '../constants';
 import Modal from './Modal';
 import { fetchWebsiteTitle } from '../services/geminiService';
@@ -177,7 +177,7 @@ const VaultView: React.FC<VaultViewProps> = ({ appKey, items, updateItems }) => 
                     <div className="flex-grow min-w-0">
                         <h3 className="font-bold text-lg truncate">{item.title}</h3>
                         {Object.entries(item).map(([key, value]) => {
-                            if (['id', 'title', 'createdAt', 'iconUrl', 'data', 'thumbnail', 'cardFrontData', 'cardFrontThumbnail', 'cardBackData', 'cardBackThumbnail', 'images'].includes(key) || !value) return null;
+                             if (['id', 'title', 'createdAt', 'iconUrl', 'data', 'thumbnail', 'cardFrontData', 'cardFrontThumbnail', 'cardBackData', 'cardBackThumbnail', 'images'].includes(key) || !value || (appKey === 'notes' && key === 'content')) return null;
                             const fieldConfig = config.fields.find(f => f.name === key);
                             if (!fieldConfig) return null;
                             
@@ -200,6 +200,9 @@ const VaultView: React.FC<VaultViewProps> = ({ appKey, items, updateItems }) => 
                                 </p>
                             );
                         })}
+                        {appKey === 'notes' && 'content' in item && (item as NoteItem).content && (
+                            <div className="mt-2 prose" style={{color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.875rem'}} dangerouslySetInnerHTML={{ __html: (item as NoteItem).content }}/>
+                        )}
                     </div>
                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity ml-2">
                         <button onClick={() => handleOpenModal(item)} className="p-2 text-blue-400 hover:text-blue-300">
@@ -304,6 +307,68 @@ const VaultView: React.FC<VaultViewProps> = ({ appKey, items, updateItems }) => 
                 )}
             </AnimatePresence>
         </motion.div>
+    );
+};
+
+
+const RichTextInput: React.FC<{
+    value: string;
+    onChange: (value: string) => void;
+    rows: number;
+}> = ({ value, onChange, rows }) => {
+    const editorRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (editorRef.current && value !== editorRef.current.innerHTML) {
+            editorRef.current.innerHTML = value;
+        }
+    }, [value]);
+
+    const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
+        onChange(e.currentTarget.innerHTML);
+    };
+
+    const execCmd = (cmd: string) => {
+        if (editorRef.current) {
+            editorRef.current.focus();
+            document.execCommand(cmd, false);
+            handleInput({ currentTarget: editorRef.current } as React.FormEvent<HTMLDivElement>);
+        }
+    };
+
+    const toolbarButtons = [
+        { cmd: 'bold', Icon: Bold, title: 'Bold' },
+        { cmd: 'italic', Icon: Italic, title: 'Italic' },
+        { cmd: 'underline', Icon: Underline, title: 'Underline' },
+        { cmd: 'strikeThrough', Icon: Strikethrough, title: 'Strikethrough' },
+        { cmd: 'insertUnorderedList', Icon: List, title: 'Bulleted List' },
+        { cmd: 'insertOrderedList', Icon: ListOrdered, title: 'Numbered List' },
+    ];
+
+    return (
+        <div className="bg-[#2a2a4a] rounded-lg border border-transparent focus-within:border-indigo-500">
+            <div className="rich-text-toolbar">
+                {toolbarButtons.map(({ cmd, Icon, title }) => (
+                    <button
+                        key={cmd}
+                        type="button"
+                        onClick={() => execCmd(cmd)}
+                        title={title}
+                    >
+                        <Icon size={16} />
+                    </button>
+                ))}
+            </div>
+            <div
+                ref={editorRef}
+                contentEditable
+                onInput={handleInput}
+                className="rich-text-editor"
+                style={{
+                    minHeight: `${rows * 1.5}rem`,
+                }}
+            />
+        </div>
     );
 };
 
@@ -451,6 +516,21 @@ const ItemForm: React.FC<{
             <div className="flex-grow overflow-y-auto pr-2 -mr-2">
                 <div className="space-y-4">
                     {config.fields.map(field => {
+                        if (field.type === 'richtext') {
+                            return (
+                                <div key={field.name}>
+                                    <label htmlFor={field.name as string} className="flex items-center text-sm font-medium text-white/70 mb-1">
+                                        {field.label}
+                                    </label>
+                                    <RichTextInput
+                                        value={formData[field.name] || ''}
+                                        onChange={content => setFormData((prev: any) => ({ ...prev, [field.name]: content }))}
+                                        rows={field.rows || 10}
+                                    />
+                                </div>
+                            );
+                        }
+
                         if (field.type === 'select') {
                             return (
                                 <div key={field.name}>

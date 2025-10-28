@@ -27,6 +27,66 @@
         scrollbar-width: thin;
         scrollbar-color: #4a4a6a #1a1a2e;
       }
+      
+      /* Rich Text Styles */
+      .prose ul, .prose ol {
+        padding-left: 1.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .prose ul { list-style-type: disc; }
+      .prose ol { list-style-type: decimal; }
+      .prose li { margin-bottom: 0.25rem; }
+      .prose strong, .prose b { font-weight: 700; }
+      .prose em, .prose i { font-style: italic; }
+      .prose u { text-decoration: underline; }
+      .prose s { text-decoration: line-through; }
+      .prose a { color: #818cf8; text-decoration: underline; }
+
+      .rich-text-editor {
+        width: 100%;
+        background-color: #2a2a4a;
+        padding: 0.5rem 0.75rem;
+        color: white;
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+      }
+      .rich-text-editor:focus {
+        outline: none;
+      }
+      .rich-text-editor:empty:before {
+        content: 'Start writing your note...';
+        color: #9ca3af;
+        cursor: text;
+        pointer-events: none;
+      }
+
+      .rich-text-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        background-color: #323259;
+        border-bottom: 1px solid #4a4a6a;
+        padding: 0.5rem;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+      }
+      .rich-text-toolbar button {
+        background: transparent;
+        border: none;
+        color: #e0e0e0;
+        padding: 0.375rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .rich-text-toolbar button:hover {
+        background-color: #4f46e5;
+        color: white;
+      }
     </style>
   <script type="importmap">
 {

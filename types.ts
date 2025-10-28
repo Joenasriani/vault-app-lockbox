@@ -69,7 +69,8 @@ export interface AppConfig {
     fields: {
         name: keyof PasswordItem | keyof CardItem | keyof LinkItem | keyof NoteItem | keyof MediaItem | keyof IdentityItem;
         label: string;
-        type: 'text' | 'password' | 'textarea' | 'url' | 'file' | 'select';
+        // Fix: Added 'richtext' to the union type to allow for rich text fields, resolving the TypeScript error in constants.ts.
+        type: 'text' | 'password' | 'textarea' | 'url' | 'file' | 'select' | 'richtext';
         required: boolean;
         accept?: string; // For file inputs
         options?: string[]; // For select inputs
