@@ -1,0 +1,5 @@
+{
+  "name": "LockBox",
+  "description": "An offline-first digital vault to securely store your passwords, cards, links, and notes. Your data is stored locally on your device and can be exported and imported securely using a unique vault ID.",
+  "requestFramePermissions": []
+}
