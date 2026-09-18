@@ -1,20 +1,22 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# LockBox
 
-# Run and deploy your AI Studio app
+LockBox is an offline-first digital vault for storing personal records such as passwords, cards, links, and notes on the user's device.
 
-This contains everything you need to run your app locally.
+## What it does
 
-View your app in AI Studio: https://ai.studio/apps/drive/1ysACA5nN6U52TCC533ODQVq1F5jx9_My
+- Stores vault data locally
+- Organizes multiple record types
+- Supports export and import
+- Uses a vault identifier for restoring or moving stored data
+- Provides a browser-based interface designed around local-first use
 
-## Run Locally
+## Status
 
-**Prerequisites:**  Node.js
+Application prototype. The repository does not by itself establish independent security certification or suitability for high-risk credential storage.
 
+## Run locally
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm install
+npm run dev
+```
