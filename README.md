@@ -1,6 +1,6 @@
-# LockBox
+# LockBox - First Prototype
 
-LockBox is a **prototype** for a browser-based personal-record organizer. It presents separate vault sections for passwords, cards, links, notes, media, and identity records, with local storage and backup import/export.
+LockBox is the **first prototype** of a browser-based personal-record organizer. It presents separate vault sections for passwords, cards, links, notes, media, and identity records, with local storage and backup import/export.
 
 ## Current capabilities
 
@@ -36,7 +36,7 @@ The optional Gemini integration uses `GEMINI_API_KEY` injected into browser-side
 
 ## Development status
 
-Application prototype only. It has not been independently audited for security or assessed for production credential storage. The source should be redesigned around authenticated encryption, sound key management, and secure handling of API credentials before any sensitive-data use.
+First prototype only. It has not been independently audited for security or assessed for production credential storage. The source should be redesigned around authenticated encryption, sound key management, and secure handling of API credentials before any sensitive-data use.
 
 Credit: Joe Nasr
 
